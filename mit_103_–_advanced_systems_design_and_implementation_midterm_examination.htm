@@ -1,0 +1,1008 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<meta name='generator' content='ExamView HTML Generator 1.0.5'>
+	<meta name='robots' content='noindex,nofollow'>
+	<title>MIT 103 &#150; ADVANCED SYSTEMS DESIGN AND IMPLEMENTATION MIDTERM EXAM</title>
+	<style type='text/css'>
+		.spacer { line-height:.7em; }
+		.title { font-size:13pt; font-weight:bold; font-family:"Times New Roman", "Times", serif; color:#000000; }
+		.qnumber { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; text-align:right; }
+		.choice { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
+		.default { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
+		.qinfo { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
+		.points { font-size:8pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
+		TD.pad { padding: 0pt 4pt 0pt 4pt; }
+		.font1 { font-family:"Times New Roman", "Times", serif; }
+		.font2 { font-family:"Arial", "Helvetica", sans-serif; }
+		.font3 { font-family:"Arial", "Helvetica", sans-serif; }
+	</style>
+<script type='text/javascript' language='JavaScript1.1'>
+<!--
+	// Copyright (c) 2000-2008 eInstruction Corp.
+	var listMap = '1111111111111111111111111';
+	var qtypeMap = '2222222222222222222222222';
+	var ansMap = new Array(25);
+	var ptsMap = new Array(25);
+	ansMap[0] = '45';
+	ptsMap[0] = 1;
+	ansMap[1] = '41';
+	ptsMap[1] = 1;
+	ansMap[2] = '41';
+	ptsMap[2] = 1;
+	ansMap[3] = '47';
+	ptsMap[3] = 1;
+	ansMap[4] = '44';
+	ptsMap[4] = 1;
+	ansMap[5] = '42';
+	ptsMap[5] = 1;
+	ansMap[6] = '46';
+	ptsMap[6] = 1;
+	ansMap[7] = '4b';
+	ptsMap[7] = 1;
+	ansMap[8] = '4d';
+	ptsMap[8] = 1;
+	ansMap[9] = '49';
+	ptsMap[9] = 1;
+	ansMap[10] = '4f';
+	ptsMap[10] = 1;
+	ansMap[11] = '4f';
+	ptsMap[11] = 1;
+	ansMap[12] = '4f';
+	ptsMap[12] = 1;
+	ansMap[13] = '4a';
+	ptsMap[13] = 1;
+	ansMap[14] = '4d';
+	ptsMap[14] = 1;
+	ansMap[15] = '51';
+	ptsMap[15] = 1;
+	ansMap[16] = '53';
+	ptsMap[16] = 1;
+	ansMap[17] = '51';
+	ptsMap[17] = 1;
+	ansMap[18] = '51';
+	ptsMap[18] = 1;
+	ansMap[19] = '55';
+	ptsMap[19] = 1;
+	ansMap[20] = '56';
+	ptsMap[20] = 1;
+	ansMap[21] = '55';
+	ptsMap[21] = 1;
+	ansMap[22] = '56';
+	ptsMap[22] = 1;
+	ansMap[23] = '59';
+	ptsMap[23] = 1;
+	ansMap[24] = '58';
+	ptsMap[24] = 1;
+	function HandleSubmit(f)
+	{
+		var	MAGIC = 840;
+		var	totalCorrect = 0;
+		var	totalPossible = 0;
+		var	numCorrect = 0;
+		var	numPossible = 0;
+		var	numBlank = 0;
+		var	index;
+		var	msg;
+		var	i;
+
+		f.student_name.value = StripSpaces(f.student_name.value);
+		f.student_id.value = StripSpaces(f.student_id.value);
+		f.student_email.value = StripSpaces(f.student_email.value);
+
+		FixMR(f);
+		FixMTF(f);
+		index = 0;
+		for (i=0; i < f.length; ++i) {
+			if (f.elements[i].name.indexOf(":") > 0) {
+				if (listMap.charAt(index) == "1") {
+					listIndex = f.elements[i].selectedIndex;
+					text = StripSpaces(f.elements[i].options[listIndex].value);
+				} else {
+					f.elements[i].value = StripSpaces(f.elements[i].value);
+					text = f.elements[i].value;
+				}
+
+				if (text.length == 0)
+					++numBlank;
+				++index;
+			}
+		}
+
+		if (f.student_name.value == "") {
+			alert("Student name cannot be blank.");
+			return(false);
+		}
+
+		if (numBlank > 0) {
+			if (numBlank == 1)
+				msg = "1 question";
+			else
+				msg = numBlank + " questions";
+			if (!confirm("You have not answered " + msg +
+				"  Are you sure you want to end the test?"))
+				return(false);
+		}
+
+		index = 0;
+		var scoreDetails = new Array();
+		for (i=0; i < f.length; ++i) {
+			if (f.elements[i].name.indexOf(":") > 0) {
+				if (listMap.charAt(index) == "1") {
+					listIndex = f.elements[i].selectedIndex;
+					text = f.elements[i].options[listIndex].value;
+				} else
+					text = f.elements[i].value;
+
+				numPossible = ptsMap[index] * MAGIC;
+				if (ansMap[index] == "")
+					scoreDetails[index] = "?--";
+				else {
+					var scoreResult = ScoreAnswer(index, text, numPossible);
+					numCorrect = scoreResult.numPoints;
+					scoreDetails[index] = (scoreResult.isCorrect) ? " " : "X";
+					scoreDetails[index] += (Math.round(numCorrect * 100 / MAGIC) / 100).toString();
+					totalCorrect += numCorrect;
+					totalPossible += numPossible;
+				}
+
+				scoreDetails[index] += "/" + (numPossible / MAGIC);
+				++index;
+			}
+		}
+
+		f.score_details.value = scoreDetails.join("|");
+		f.score_correct.value = Math.round(totalCorrect * 100 / MAGIC) / 100;
+		f.score_possible.value = Math.round(totalPossible * 100 / MAGIC) / 100;
+		if (totalPossible > 0)
+			f.score_percent.value = Math.round(100.0 * totalCorrect / totalPossible);
+		else
+			f.score_percent.value = 0;
+
+		return(true);
+	}
+
+	function TranslateAnswer(s, answerIndex)
+	{
+		var	value;
+		var	newString;
+		var	code;
+		var	i;
+
+		value = (answerIndex % 31) + 1;
+		newString = "";
+		for (i=0; i < s.length; i += 2) {
+			code = parseInt(s.substring(i, i + 2), 16);
+			newString += String.fromCharCode(code ^ value);
+		}
+
+		return(newString);
+	}
+
+	function ScoreAnswer(answerIndex, responseText, pointsPossible)
+	{
+		var answerText = TranslateAnswer(ansMap[answerIndex], answerIndex);
+		var qtype = qtypeMap.charAt(answerIndex);
+		var nrExactMatch = false;
+		var result = new Array();
+
+		result.numPoints = 0;
+		result.isCorrect = false;
+
+		if (qtype == "3" && answerText.substring(0, 2) == "p:") {
+			answerText = answerText.substr(2);
+			if (responseText.toUpperCase() == answerText.toUpperCase())
+				result.isCorrect = true;
+			else
+				result.numPoints = MultiResponseCompare(responseText, answerText, pointsPossible);
+		} else if (qtype == "6") {
+			if (answerText.substring(0, 2) == "==") {
+				answerText = answerText.substr(2);
+				nrExactMatch = true;
+			}
+			if (NumericCompare(responseText, answerText, nrExactMatch))
+				result.isCorrect = true;
+		} else if (qtype == "7") {
+			if (CompletionCompare(responseText, answerText))
+				result.isCorrect = true;
+		} else if (responseText.toUpperCase() == answerText.toUpperCase())
+			result.isCorrect = true;
+
+		if (result.isCorrect)
+			result.numPoints = pointsPossible;
+
+		return(result);
+	}
+
+	function StripSpaces(s)
+	{
+		var	len;
+		var	i;
+
+		len = s.length;
+		for (i=len - 1; i >= 0 && s.charAt(i) == " "; --i)
+			len = i;
+
+		if (len == 0)
+			s = "";
+		else if (len != s.length)
+			s = s.substring(0, len);
+
+		return(s);
+	}
+
+	function MultiResponseCompare(responseText, answerText, pointsPossible)
+	{
+	}
+
+	function NumericCompare(response, answer, exactMatch)
+	{
+	}
+
+
+	function CompletionCompare(responseText, answerText)
+	{
+		return(false);
+	}
+
+	function FixMTF(f)
+	{
+	}
+
+	function FixMR(f)
+	{
+	}
+
+	function AllowReset()
+	{
+		return(window.confirm("Do you want to clear all of your answers?"));
+	}
+
+	function Restart()
+	{
+		if (AllowReset()) {
+			document.TestForm.onreset = function() { };
+			document.TestForm.reset();
+			document.TestForm.onreset = function() { AllowReset(); };
+		}
+	}
+// -->
+</script>
+</head>
+<body onResize='if(document.layers && navigator.appVersion.indexOf("Win") < 0){history.go(0);}'
+bgcolor='#FFFFFF' style='background-image:url(mit_103_-_advanced__files/header.gif); background-repeat:no-repeat'>
+<noscript>
+	<h3><font color='#FF0000'>Javascript not enabled</font></h3>
+</noscript>
+<script type='text/javascript' language='JavaScript'>
+<!--
+if (navigator.appName.indexOf("Netscape") >= 0) {
+	if (parseInt(navigator.appVersion.charAt(0)) < 4)
+		alert("This document requires Netscape Navigator version 4.0 or later.");
+} else if (navigator.appName.indexOf("Explorer") >= 0) {
+	if (parseInt(navigator.appVersion.charAt(0)) < 4)
+		alert("This document requires Internet Explorer version 4.0 or later.");
+}
+// -->
+</script>
+<form name='TestForm' action='http://score.examview.com/cgi-bin/results.cgi' method='POST'
+	onSubmit='return(HandleSubmit(this))' onReset='return(AllowReset())'>
+<input type='hidden' name='product_version' value='6.2.1'>
+<input type='hidden' name='instructor_name' value='Levi'>
+<input type='hidden' name='instructor_formalname' value='Levi Corvera'>
+<input type='hidden' name='instructor_email' value='corveralevistudents@gmail.com'>
+<input type='hidden' name='instructor_org' value='SNSU'>
+<input type='hidden' name='instructor_city' value='Surigao'>
+<input type='hidden' name='instructor_state' value='13'>
+<input type='hidden' name='test_name' value='MIT 103 – ADVANCED SYSTEMS DESIGN AND IMPLEMENTATION MIDTERM EXAM'>
+<input type='hidden' name='other_label' value='Other'>
+<input type='hidden' name='test_mixed_questions' value='0'>
+<input type='hidden' name='score_correct' value='0'>
+<input type='hidden' name='score_possible' value='0'>
+<input type='hidden' name='score_percent' value='0'>
+<input type='hidden' name='score_subjective' value='0'>
+<input type='hidden' name='score_details' value=''>
+<input type='hidden' name='score_showresults' value='1'>
+<div class='spacer'>&nbsp;</div>
+<div class='default'>
+	<div style='margin-left:1em'>
+	<b>Name:</b>&nbsp;<input type='text' name='student_name' size='30'> &nbsp;&nbsp;
+	<b>ID:</b>&nbsp;<input type='text' name='student_id' size='12'><br>
+	<div class='spacer'>&nbsp;</div>
+	<b>Email:</b>&nbsp;<input type='text' name='student_email' size='45'><br><br>
+	</div>
+</div>
+<div class='title'>MIT 103 &#150; ADVANCED SYSTEMS DESIGN AND IMPLEMENTATION MIDTERM EXAM</div>
+
+<table align='left' width='100%' border='0' cellpadding='0' cellspacing='0'>
+<tr valign='top'>
+	<td colspan='3'><br>
+<div class='default'><b>Multiple Choice</b><span style='font-size:10pt'><br></span><i>Identify the
+choice that best completes the statement or answers the question.</i></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:1' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;1.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>A team using Kanban has reached a bottleneck stage where tasks are piling up in
+the &quot;In Progress&quot; column. Which action best resolves this issue?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Increase the Work In Progress (WIP) limit</span></td><td width='4%'><div
+class='choice'>c.</div></td><td width='46%'><span class='default'>Add more team members to the
+project</span></td></tr><tr valign='baseline'><td><div class='choice'>b.</div></td><td><span
+class='default'>Start new tasks to increase productivity</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Reduce the WIP limit and focus on completing
+tasks</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:2' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;2.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>A software team wants to create a flexible, reusable solution for building
+different types of documents (e.g., Word, PDF, HTML). Which design pattern would best suit this
+need?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Proxy Pattern</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>Factory Pattern</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Observer Pattern</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Adapter Pattern</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:3' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;3.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>A startup needs to quickly build a web application using a framework that
+provides ORM, URL routing, and templating. The development team is most experienced with Python.
+Which framework is most suitable?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Laravel</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>Ruby on Rails</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Django</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Express.js</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:4' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;4.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>During a retrospective, the team discusses that certain user stories are too
+large and complex to complete within a single sprint. What approach should the team take in future
+sprints?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Avoid complex stories in future sprints</span></td><td width='4%'><div
+class='choice'>c.</div></td><td width='46%'><span class='default'>Split complex user stories into
+smaller, manageable tasks</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Assign more team members to complex
+stories</span></td><td><div class='choice'>d.</div></td><td><span class='default'>Continue with large
+stories and adjust the sprint length</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:5' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;5.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>An e-commerce company plans to transition from a monolithic architecture to
+microservices. What is a primary advantage of microservices that supports this decision?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Easier scaling of specific components</span></td><td width='4%'><div
+class='choice'>c.</div></td><td width='46%'><span class='default'>Reduced need for
+monitoring</span></td></tr><tr valign='baseline'><td><div class='choice'>b.</div></td><td><span
+class='default'>Reduced communication between services</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Simplicity of
+deployment</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:6' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;6.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>In a microservices architecture, if service A is dependent on service B and
+service B fails, which approach ensures that service A remains functional?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Shifting to a monolithic model</span></td><td width='4%'><div
+class='choice'>c.</div></td><td width='46%'><span class='default'>Increasing service A&#8217;s
+memory</span></td></tr><tr valign='baseline'><td><div class='choice'>b.</div></td><td><span
+class='default'>Introducing additional redundancy in service B</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Implementing a circuit breaker
+pattern</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:7' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;7.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>A colleague suggests using a use-case diagram to explain a user&#8217;s journey
+in a retail application. What is the primary benefit of this approach?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Simplifying technical complexities for the client</span></td><td width='4%'><div
+class='choice'>c.</div></td><td width='46%'><span class='default'>Depicting object hierarchies
+clearly</span></td></tr><tr valign='baseline'><td><div class='choice'>b.</div></td><td><span
+class='default'>Mapping out interactions in detail for backend components</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Reducing the need for class
+diagrams</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:8' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;8.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>You are developing a RESTful service for an online store and need an endpoint
+that allows clients to update a product&#039;s details. Which HTTP method should be used?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>DELETE</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>PATCH</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>OPTIONS</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>GET</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:9' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;9.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Which type of middleware would best suit an e-commerce platform that needs to
+queue and handle large numbers of orders during flash sales?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>HTTP Protocol</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>ETL Middleware</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>RPC (Remote Procedure Call)</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Message Broker</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:10' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;10.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>A company&#8217;s system requires real-time updates across multiple
+applications, such as stock prices in a trading app. Which middleware solution is most suitable for
+this need?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>ETL (Extract, Transform, Load) process</span></td><td width='4%'><div
+class='choice'>c.</div></td><td width='46%'><span class='default'>Message Broker (e.g.,
+RabbitMQ)</span></td></tr><tr valign='baseline'><td><div class='choice'>b.</div></td><td><span
+class='default'>RESTful API</span></td><td><div class='choice'>d.</div></td><td><span
+class='default'>Microservices</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:11' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;11.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>In designing a login system, you need to show interactions between
+&#8220;User,&#8221; &#8220;Database,&#8221; and &#8220;AuthController&#8221; in response to a login
+attempt. Which UML diagram type best captures this interaction?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Class Diagram</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>Use Case Diagram</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Component Diagram</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Sequence
+Diagram</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:12' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;12.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>During a system refinement phase, you notice that the codebase has tightly
+coupled modules, making testing and maintenance difficult. Which design pattern could improve
+modularity and testability?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Template Method Pattern</span></td><td width='4%'><div
+class='choice'>c.</div></td><td width='46%'><span class='default'>Dependency
+Injection</span></td></tr><tr valign='baseline'><td><div class='choice'>b.</div></td><td><span
+class='default'>Observer Pattern</span></td><td><div class='choice'>d.</div></td><td><span
+class='default'>Mediator Pattern</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:13' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;13.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>An API documentation specifies that clients should use an Authorization header
+with a bearer token. What is the primary purpose of this?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>To manage caching of API responses</span></td><td width='4%'><div
+class='choice'>c.</div></td><td width='46%'><span class='default'>To determine request method (GET,
+POST, etc.)</span></td></tr><tr valign='baseline'><td><div class='choice'>b.</div></td><td><span
+class='default'>To authenticate and authorize the user</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>To specify the data format (e.g., JSON,
+XML)</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:14' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;14.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>A product owner needs to prioritize features based on customer feedback, team
+capacity, and project deadlines. What tool or technique is most suitable for this task?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Daily Stand-up</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>Sprint Burndown</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Burnup Chart</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>User Story
+Mapping</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:15' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;15.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>During system integration testing, it is discovered that two applications are
+using different data formats, causing compatibility issues. Which solution would best resolve this
+problem?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Use synchronous calls to force compatibility</span></td><td width='4%'><div
+class='choice'>c.</div></td><td width='46%'><span class='default'>Rewrite one of the applications to
+match the data format</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Introduce a data translation layer as
+middleware</span></td><td><div class='choice'>d.</div></td><td><span class='default'>Ignore the issue
+and proceed with the current setup</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:16' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;16.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>In a Scrum framework, who is responsible for prioritizing the backlog items and
+ensuring that the most valuable features are worked on first?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Product Owner</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>Stakeholders</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Development Team</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Scrum Master</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:17' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;17.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>A company requires an API for data access across multiple applications, ensuring
+secure data exchange with minimal latency. Which type of API is most suitable for this
+scenario?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>File-based API</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>GraphQL API</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>RESTful API</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>SOAP API</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:18' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;18.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>An application requires frequent transformations between incompatible
+interfaces. Which pattern should you use to make these transformations without altering existing
+code?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Bridge Pattern</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>Adapter Pattern</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Flyweight Pattern</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Composite
+Pattern</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:19' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;19.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>While analyzing a sequence diagram, you notice that multiple objects need to
+interact with a primary controller object to perform tasks. Which design pattern might improve this
+interaction flow?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Factory</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>Observer</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Mediator</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Singleton</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:20' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;20.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>A financial application requires refined error handling, where errors are
+managed centrally and customized messages are returned based on the error type. Which design pattern
+might help refine the error management system?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Chain of Responsibility</span></td><td width='4%'><div
+class='choice'>c.</div></td><td width='46%'><span class='default'>Singleton</span></td></tr><tr
+valign='baseline'><td><div class='choice'>b.</div></td><td><span
+class='default'>Flyweight</span></td><td><div class='choice'>d.</div></td><td><span
+class='default'>Prototype</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:21' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;21.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>A healthcare organization must integrate multiple legacy systems with a new
+application, ensuring seamless data sharing across systems. What approach would best facilitate
+interoperability?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Replacement of legacy systems with new ones</span></td><td width='4%'><div
+class='choice'>c.</div></td><td width='46%'><span class='default'>Implementation of a common RESTful
+API across systems</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Use of custom file formats for each
+system</span></td><td><div class='choice'>d.</div></td><td><span class='default'>Deployment of
+isolated microservices for each system</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:22' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;22.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>A client requests a system that handles millions of concurrent users without
+performance degradation. Which requirement is most crucial in the initial analysis?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Reliability</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>Scalability</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Portability</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Usability</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:23' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;23.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>You&#8217;re tasked with selecting a PHP framework for a project that
+prioritizes fast setup, MVC structure, and modular component integration. Which framework best meets
+these requirements?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Laravel</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>Flask</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>React</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>ASP.NET</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:24' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;24.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>A software team requires a project management tool with advanced features for
+managing sprints, issue tracking, and detailed reporting. Which tool best meets these
+requirements?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Jira</span></td><td width='4%'><div class='choice'>c.</div></td><td width='46%'><span
+class='default'>Trello</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Slack</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Microsoft Excel</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+		<select name='MC:25' align='top' onmousewheel='return(false);'>
+			<option value=' '> 
+			<option value='A'>A
+			<option value='B'>B
+			<option value='C'>C
+			<option value='D'>D
+		</select>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;25.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>In Jira, the project team notices that certain tasks remain unresolved and are
+piling up in each sprint. Which feature in Jira can help the team identify recurring issues and
+better manage task flow?</div>
+<div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
+valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
+class='default'>Burndown Chart</span></td><td width='4%'><div class='choice'>c.</div></td><td
+width='46%'><span class='default'>Kanban Board</span></td></tr><tr valign='baseline'><td><div
+class='choice'>b.</div></td><td><span class='default'>Backlog Grooming</span></td><td><div
+class='choice'>d.</div></td><td><span class='default'>Issue Type
+Configuration</span></td></tr></table></div>
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+</table>
+<br clear='all'>
+<br>
+<br>
+<table align='left' width='100%' cellpadding='0' cellspacing='0' border='0'>
+<tr>
+    <td bgcolor='#000000'>
+    <div style='font-size:1pt'>&nbsp;</div>
+    </td>
+</tr>
+<tr>
+    <td><input type='image' src='mit_103_-_advanced__files/submit.gif' alt='Grade and Submit'>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href='#' onclick='Restart(); return false'><img
+	    src='mit_103_-_advanced__files/restart.gif' border='0' alt='Start Over'></a>
+    </td>
+</tr>
+</table>
+</form>
+</body>
+</html>
